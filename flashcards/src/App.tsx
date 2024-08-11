@@ -1,12 +1,20 @@
-
+import { Dashboard } from './flashcardspage/Dashboard'
+import { BrowserRouter, Route,Routes } from 'react-router-dom'
 import './App.css'
+import { Signin } from './adminpage/Login'
+import { Signup } from './adminpage/Signup'
 
-function App() {
+const App:React.FC =()=> {
 
   return (
-    <div>
-
-    </div>
+    <BrowserRouter>
+    <Routes>
+      <Route path='/dashboard' element={<Dashboard/>}/>
+      <Route path='/' element={<Signin/>}/>
+      <Route path='/signup' element={<Signup/>}/>
+      
+    </Routes>
+    </BrowserRouter>
   )
 }
 

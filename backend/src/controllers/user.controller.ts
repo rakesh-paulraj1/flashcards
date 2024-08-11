@@ -9,7 +9,7 @@ export class Usercontroller {
     public async signupuser(req: Request, res: Response): Promise<void> {
         try {
             const { username, password } = req.body;
-
+           console.log(req.body);
             const existingUser = await User.findOne({ where: { username } });
 
             if (existingUser) {
@@ -18,7 +18,7 @@ export class Usercontroller {
             }
 
             const user = await User.create({ username, password });
-
+                console.log(user);
             res.status(200).json({ message: "User created successfully" });
         } catch (error) {
             console.error('Error creating user:', error);
@@ -28,16 +28,18 @@ export class Usercontroller {
     public async loginuser(req: Request, res: Response): Promise<void> {
         try {
             const { username, password } = req.body;
-    
+          console.log(req.body.username);
             const user = await User.findOne({ where: { username, password } });
-    
+           
             if (!user) {
+                console.log("Invalid username or password");
                 res.status(403).json({ err: "Invalid username or password" });
                 return;
             }
             const jwt = await sign({ id: user.getDataValue('id') }, JWT_SECRET!);
     
             const user_id = user.getDataValue('id');
+            console.log(jwt);
     
             res.status(200).json({ jwt, user_id, message: "User logged in successfully" });
         } catch (error) {
