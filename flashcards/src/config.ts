@@ -1,5 +1,5 @@
 const config = {
-    apiUrl: 'https://flashcards-fawn.vercel.app/',
+    apiUrl: 'https://flashcards-307u.onrender.com',
   };
   
   export default config;
