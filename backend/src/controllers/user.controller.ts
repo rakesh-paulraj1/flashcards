@@ -8,42 +8,43 @@ export class Usercontroller {
     constructor() {}
     public async signupuser(req: Request, res: Response): Promise<void> {
         try {
-            const { username, password } = req.body;
-           console.log(req.body);
-            const existingUser = await User.findOne({ where: { username } });
+            const data = req.body;
+          
+            const existingUser = await User.findOne({ where: { username:data.username } });
 
             if (existingUser) {
+                
                 res.status(400).json({ err: "User already exists" });
                 return;
             }
 
-            const user = await User.create({ username, password });
-                console.log(user);
+            const user = await User.create({ username:data.username, password:data.password });
+                
             res.status(200).json({ message: "User created successfully" });
         } catch (error) {
-            console.error('Error creating user:', error);
-            res.status(500).json({ error: 'Internal server error' });
+           
+            res.status(500).json({ err: 'Internal server error' });
         }
     }
     public async loginuser(req: Request, res: Response): Promise<void> {
         try {
-            const { username, password } = req.body;
-          console.log(req.body.username);
-            const user = await User.findOne({ where: { username, password } });
+            const data = req.body;
+         
+            const user = await User.findOne({ where: { username:data.username, password:data.password } });
            
             if (!user) {
-                console.log("Invalid username or password");
+                
                 res.status(403).json({ err: "Invalid username or password" });
                 return;
             }
             const jwt = await sign({ id: user.getDataValue('id') }, JWT_SECRET!);
     
             const user_id = user.getDataValue('id');
-            console.log(jwt);
+            
     
             res.status(200).json({ jwt, user_id, message: "User logged in successfully" });
         } catch (error) {
-            console.error('Error logging in user:', error);
+            
             res.status(500).json({ err: "Internal server error" });
         }
     }

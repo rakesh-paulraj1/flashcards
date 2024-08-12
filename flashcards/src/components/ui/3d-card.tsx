@@ -150,7 +150,11 @@ export const CardItem = ({
 
     ><div>
   
-      <div className="text-xl font-bold text-neutral-600 dark:text-white">
+  <div
+      className={`text-xl font-bold ${
+        showAnswer ? 'text-green-500' : 'text-neutral-600'
+      } dark:${showAnswer ? 'text-green-300' : 'text-white'}`}
+    >
       {showAnswer ? backContent : frontContent} 
       </div>
       

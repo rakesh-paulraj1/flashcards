@@ -25,6 +25,7 @@ const EditCard: React.FC<EditCardProps> = ({ card, onShadowClick, onUpdateCard }
         answer,
         index: card.index, 
       });
+      window.location.reload();
     }
   };
 

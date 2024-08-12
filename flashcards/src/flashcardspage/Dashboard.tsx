@@ -81,6 +81,7 @@ export const Dashboard = () => {
           Authorization: `${jwttoken}`
         }
       });
+      window.location.reload();
       const updatedFlashcards = flashcardData.filter((flashcard) => flashcard.id !== cardId);
       setFlashcardData(updatedFlashcards);
     } catch (error) {

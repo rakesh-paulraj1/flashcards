@@ -14,7 +14,7 @@ const Header: React.FC = () => {
   const handleLogout = () => {
     localStorage.removeItem('token'); 
     setIsLoggedIn(false);
-    
+    window.location.reload();
   };
 
   return (
@@ -24,7 +24,7 @@ const Header: React.FC = () => {
       {isLoggedIn ? (
         <button onClick={handleLogout} className="text-gray-600">Logout</button>
       ) : (
-        <Link to={'/'} className="text-gray-600">Login</Link>
+        <Link to={'/signin'} className="text-gray-600">Login</Link>
       )}
     </div>
   );

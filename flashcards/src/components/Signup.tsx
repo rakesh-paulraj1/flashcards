@@ -19,24 +19,29 @@ export const  SignupCard = () => {
 
 
     async function signuphandler() {
-        try {
-            const response = await axios.post(`${config.apiUrl}/signup`, postInputs);
-            const jwt = response.data.body.jwt;
+        
+             axios.post(`${config.apiUrl}/signup`, postInputs)
+            .then((response)=>{
+                const jwt = response.data.body.jwt;
             const id = response.data.body.id;
             const name = response.data.body.username;
-         
+           const {message}=response.data
+           alert(message);
             localStorage.setItem("token", jwt);
             localStorage.setItem("user", id);
             localStorage.setItem("username", name);
-            navigate("/dashboard");
+            navigate("/");
+            })
+            .catch((error)=>{
+                if (axios.isAxiosError(error) && error.response) {
+                    
+                    console.error('Error response:', error.response.data);
+                    const errorMessage = error.response.data.err || 'An error occurred during signup';
+                    alert(errorMessage); 
+            }})
+            
       
-        } catch (error: unknown) {
-            if (axios.isAxiosError(error) && error.response) {
-                console.log(error.response.data.message[0]?.message || error.response.data.message);
-            } else {
-                console.log('An unknown error occurred');
-            }
-        }
+        
     }
     return <div className="h-screen flex justify-center items-center">
         <div className="h-[470px] w-[360px] bg-neutral-950 rounded-lg shadow-slate-800 shadow-[0_0_10px_2px_rgb(148,163,184)] flex flex-col items-center p-4">
@@ -47,7 +52,7 @@ export const  SignupCard = () => {
                     </div>
                     <div className="text-slate-400 ">
                          Already have an account ?
-                        <Link className=" flex center underline" to="/">
+                        <Link className=" flex center underline" to="/signin">
                            SignIn
                         </Link>
                     </div>
@@ -90,3 +95,4 @@ function LabelledInput({ label, placeholder, onChange, type }: LabelledInputType
         <input onChange={onChange} type={type || "text"} id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder={placeholder} required />
     </div>
 }
+

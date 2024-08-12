@@ -17,6 +17,7 @@ const CreateCard: React.FC<CreateCardProps> = ({ onShadowClick, onCreateCard }) 
         answer,
       });
     }
+    window.location.reload();
   };
 
   return (

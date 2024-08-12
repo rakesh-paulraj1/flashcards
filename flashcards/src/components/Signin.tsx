@@ -18,15 +18,34 @@ export const  SigninCard = () => {
 
 
 
-    async function signuphandler() {
+    async function signinhandler() {
       
+        try {
+            console.log('Posting data:', postInputs);
             const response = await axios.post(`${config.apiUrl}/login`, postInputs);
-            console.log(response.data);
-            const jwt = response.data.jwt;
-             console.log(postInputs);
+            console.log('Response data:', response.data); 
+    
+          
+            const { jwt, user_id, } = response.data;
+    
+           
             localStorage.setItem("token", jwt);
+            localStorage.setItem("user_id", user_id);
+            localStorage.setItem("username", postInputs.username);
+    
             
-            navigate("/dashboard");
+            navigate("/");
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error) && error.response) {
+                
+                console.error('Error response:', error.response.data);
+                const errorMessage = error.response.data.err || 'An error occurred during login';
+                alert(errorMessage); 
+            } else {
+                console.log('An unknown error occurred');
+                alert('An unknown error occurred');
+            }
+        }
           
     }
     return <div className="h-screen flex justify-center items-center">
@@ -57,9 +76,9 @@ export const  SigninCard = () => {
                             password: e.target.value
                         })
                     }} />
-                    <button onClick={signuphandler} type="button" className="mt-6 h-9 w-full animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 my-8">SignIn</button>
+                    <button onClick={signinhandler} type="button" className="mt-6 h-9 w-full animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 my-8">SignIn</button>
                     <div className="text-slate-400 ">
-                        <Link to={'/dashboard'}>Access Flashcards</Link>
+                        <Link to={'/'}>Access Flashcards</Link>
                     </div>
                 </div>
             </div>
