@@ -92,7 +92,7 @@ export const Dashboard = () => {
 
 
   if (flashcardData.length === 0) {
-    return <div>Loading...</div>;
+    return <div>Loading...Please wait till the backend starts</div>;
   }
 
   const currentFlashcard = flashcardData[currentIndex];
